@@ -10,24 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   title = 'Frozenlogic Assignment';
-  private node: Children = {
-    "id": 3,
-    "name":"Portable Devices",
-    "parentId": 1
+  receivednodes: any[] = [];
+  node = {
+    name:"test"
   }
-    
   
-
-  constructor(private nodeService: NodeService) {}
+  constructor(private nodeService: NodeService) {
+  }
 
   ngOnInit(): void {
     this.onGetNodes();
-    //this.onGetNode();
   }
 
    onGetNodes(): void {
     this.nodeService.getNodes().subscribe({
-        next: (response) => console.table(response),
+        next: (response) => this.receivednodes = response,
         error: (error) => console.error(error),
         complete: () => console.info('Nodes are loaded') 
     })

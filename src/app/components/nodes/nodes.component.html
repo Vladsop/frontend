@@ -1,0 +1,5 @@
+<body>
+    <dl *ngFor="let parent of nodes; let i = index;">{{parent.name}}
+        <li *ngFor="let child of nodes[i].children; let j = index;">{{child.name}}</li>
+    </dl>
+</body>

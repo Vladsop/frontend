@@ -17,8 +17,8 @@ export class NodeService {
     return this.http.get<Node[]>(`${this.apiUrl}/parent`);
   }
 
-  getNode(): Observable<Children> {
-    return this.http.get<Children>(`${this.apiUrl}/parent/1`);
+  getNode(): Observable<Node> {
+    return this.http.get<Node>(`${this.apiUrl}/parent/1`);
   }
 
   createNode(node: Node): Observable<Node> {
