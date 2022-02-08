@@ -1,7 +1,7 @@
 import { Children } from "./children";
 
 export interface Node {
-  id?: number
+  id: number
   name: string
   children?: Children[]
 }

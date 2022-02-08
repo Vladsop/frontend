@@ -1,6 +1,7 @@
 import { Children } from './interface/children';
+import { ChildService } from './service/child.service';
 import { Node } from './interface/node';
-import { NodeService } from './service/node.service';
+import { ParentNodeService } from './service/node.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,27 +12,50 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
   title = 'Frozenlogic Assignment';
   receivednodes: any[] = [];
-  node = {
-    name:"test"
-  }
-  
-  constructor(private nodeService: NodeService) {
+  node;
+  child;
+    
+  constructor(private parentNodeService: ParentNodeService, private childNodeService: ChildService) {
+    this.node = {} as Node;
+    this.child = {} as Children;
   }
 
   ngOnInit(): void {
     this.onGetNodes();
   }
 
+  addNode(addNewNode: string) {
+    this.node.name = addNewNode.toUpperCase();
+    this.onCreateNode();
+    this.onGetNodes();
+  }
+
+  addChildNode(parentId:number, name: string) {
+    this.onCreateChildNode({parentId, name});
+  }
+
+  deleteChildNode(id: number) {
+    this.onDeleteChildNode(id);
+  }
+
+  deleteNode(id: number) {
+    this.onDeleteNode(id);
+  }
+
+  updateNode(id: number, name:string){
+    this.onUpdateNode({id, name})
+  }
+
    onGetNodes(): void {
-    this.nodeService.getNodes().subscribe({
+    this.parentNodeService.getNodes().subscribe({
         next: (response) => this.receivednodes = response,
         error: (error) => console.error(error),
         complete: () => console.info('Nodes are loaded') 
     })
   }
 
-  onGetNode(): void {
-    this.nodeService.getNode().subscribe({
+  onGetNode(id:number): void {
+    this.parentNodeService.getNode(id).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
         complete: () => console.info('Node is loaded') 
@@ -39,34 +63,50 @@ export class AppComponent implements OnInit{
   }
 
   onCreateNode(): void {
-    this.nodeService.createNode(this.node).subscribe({
+    this.parentNodeService.createNode(this.node).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
         complete: () => console.info('Node is created') 
     })
   }
 
-  onUpdateNode(): void {
-    this.nodeService.updateNode(this.node).subscribe({
+  onCreateChildNode(children :Children): void {
+    this.childNodeService.createNode(children).subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.error(error),
+      complete: () => console.info('ChildNode is created')
+    })
+  }
+
+  onUpdateNode(node: Node): void {
+    this.parentNodeService.updateNode(node).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
         complete: () => console.info('Node is updated') 
     })
   }
 
-  onPatchNode(): void {
-    this.nodeService.patchNode(this.node).subscribe({
+  onPatchNode(node: Node): void {
+    this.parentNodeService.patchNode(node).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
         complete: () => console.info('Node is patched') 
     })
   }
 
-  onDeleteNode(): void {
-    this.nodeService.deleteNode(1).subscribe({
+  onDeleteNode(id: number): void {
+    this.parentNodeService.deleteNode(id).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
         complete: () => console.info('Node is deleted') 
+    })
+  }
+
+  onDeleteChildNode(id: number): void {
+    this.childNodeService.deleteNode(id).subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.error(error),
+        complete: () => console.info('Child is deleted') 
     })
   }
 }

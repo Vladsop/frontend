@@ -1,5 +1,28 @@
 <body>
-    <dl *ngFor="let parent of nodes; let i = index;">{{parent.name}}
-        <li *ngFor="let child of nodes[i].children; let j = index;">{{child.name}}</li>
-    </dl>
+    <div [style.visibility]="nodeformvisibility" class="add"><label for="node-input">Add Node:</label>
+        <input type="text" id="node-input" #newNode>
+        <button (click)="addParentNode(newNode.value)">Add</button>
+    </div>
+    <div [style.visibility]="updatenodeformvisibility" [id]="updateid" class="update"><label for="node-input">Update Node:</label>
+        <input type="text" id="updated-node-input" #updatedNode>
+        <button (click)="editParentNode(updateid,updatedNode.value)">Update</button>
+    </div>
+    <div *ngFor="let parent of nodes; let i = index;" (click)="toggleParentButtons()" class="parentButtons">{{parent.name}}
+        <button [style.visibility]="addparentvisibility" (click)="toggleAddNode()"> Add </button>
+        <button [style.visibility]="addparentvisibility" (click)="deleteParentNode(parent.id)"> Delete </button>
+        <button [style.visibility]="addparentvisibility" (click)="toggleEditNode(parent.id)" > Edit </button>
+        <button [style.visibility]="addparentvisibility"> Add Children</button>
+        <li *ngFor="let child of nodes[i].children; let j = index;" (click)="toggleChildButtons()" class="childButtons" >{{child.name}}
+            <button [style.visibility]="addchildvisibility"(click)="toggleAddChildNode(parent.id)"> Add </button>
+            <button [style.visibility]="addchildvisibility"(click)="deleteChild(4)"> Delete </button>
+            <button [style.visibility]="addchildvisibility"> Edit </button></li>
+            <div [style.visibility]="childnodeformvisibility" class="add"><label for="node-input">Add Child Node:</label>
+                <input type="text" id="node-input" #newChildNode [id]="parentId">
+                <button (click)="addChildNode(parentId, newChildNode.value)">Add</button>
+            </div>
+            <div [style.visibility]="updatenodeformvisibility" [id]="updateid" class="update"><label for="node-input">Update Node:</label>
+                <input type="text" id="updated-node-input" #updatedNode>
+                <button (click)="editParentNode(updateid,updatedNode.value)">Update</button>
+            </div>
+    </div>
 </body>

@@ -1,0 +1,18 @@
+.parentButtons {
+    width:max-content;
+    margin-bottom: 30px;
+}
+
+.childButtons {
+    width:max-content;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.add{
+    margin-bottom: 5px;
+}
+
+.update{
+    margin-bottom: 5px;
+}

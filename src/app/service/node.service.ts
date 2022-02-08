@@ -1,4 +1,3 @@
-import { Children } from '../interface/children';
 import { environment } from './../../environments/environment';
 import { Node } from './../interface/node';
 import { Injectable } from '@angular/core';
@@ -8,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NodeService {
+export class ParentNodeService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {} 
@@ -17,8 +16,8 @@ export class NodeService {
     return this.http.get<Node[]>(`${this.apiUrl}/parent`);
   }
 
-  getNode(): Observable<Node> {
-    return this.http.get<Node>(`${this.apiUrl}/parent/1`);
+  getNode(id: number): Observable<Node> {
+    return this.http.get<Node>(`${this.apiUrl}/parent/${id}`);
   }
 
   createNode(node: Node): Observable<Node> {
@@ -26,7 +25,7 @@ export class NodeService {
   }
 
   updateNode(node: Node): Observable<Node> {
-    return this.http.put<Node>(`${this.apiUrl}/parent/${node.id}`, node);
+    return this.http.patch<Node>(`${this.apiUrl}/parent/${node.id}`, node);
   }
 
   patchNode(node: Node): Observable<Node> {

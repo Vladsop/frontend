@@ -1,5 +1,5 @@
 export interface Children{
-  id: number
-  name: string
-  parentId: number
+  id?: number;
+  name: string;
+  parentId: number;
 }
